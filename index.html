@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101014">
+  <meta name="description" content="A private music player for songs stored on your device.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>Offline Beats</title>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">♫</div><div><strong>Offline Beats</strong><small>YOUR MUSIC. YOUR RULES.</small></div></div>
+      <button id="addSongsBtn" class="icon-btn" aria-label="Add songs" title="Add songs">＋</button>
+      <input id="filePicker" type="file" accept="audio/*,.mp3,.m4a,.aac,.wav,.ogg,.flac,.opus" multiple hidden>
+    </header>
+
+    <nav class="tabs" aria-label="Sections">
+      <button class="tab active" data-view="home">Home</button>
+      <button class="tab" data-view="library">Your library</button>
+      <button class="tab" data-view="playlists">Playlists</button>
+    </nav>
+
+    <section id="homeView" class="view">
+      <div class="hero">
+        <div class="eyebrow">THE SOUNDTRACK IS YOURS</div>
+        <h1>All your<br><span>favorite sounds.</span></h1>
+        <p>Play music saved on your phone. No account, no streaming subscription.</p>
+        <button id="heroAddBtn" class="primary-btn">＋ Add downloaded songs</button>
+      </div>
+      <div class="section-head"><h2>Recently added</h2><button class="text-btn" data-goto="library">See all</button></div>
+      <div id="recentList" class="song-list"></div>
+      <div id="emptyHome" class="empty-state"><div class="empty-icon">♫</div><h3>Your music starts here</h3><p>Tap “Add downloaded songs” and choose audio files from your phone.</p></div>
+    </section>
+
+    <section id="libraryView" class="view" hidden>
+      <div class="section-head library-head"><div><div class="eyebrow">YOUR COLLECTION</div><h1>Your library</h1></div><button id="libraryAddBtn" class="primary-btn compact">＋ Add songs</button></div>
+      <label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Search songs or artists"></label>
+      <div id="libraryList" class="song-list"></div>
+      <div id="emptyLibrary" class="empty-state"><div class="empty-icon">♫</div><h3>No songs yet</h3><p>Add music files stored on your device.</p></div>
+    </section>
+
+    <section id="playlistsView" class="view" hidden>
+      <div class="section-head library-head"><div><div class="eyebrow">MADE BY YOU</div><h1>Playlists</h1></div><button id="newPlaylistBtn" class="primary-btn compact">＋ Create</button></div>
+      <div id="playlistList" class="playlist-grid"></div>
+      <div id="emptyPlaylists" class="empty-state"><div class="empty-icon">▤</div><h3>Set the mood</h3><p>Create playlists and add songs from your library.</p></div>
+      <div id="playlistDetail" hidden>
+        <button id="backPlaylistsBtn" class="text-btn back-btn">← All playlists</button>
+        <div class="playlist-banner"><div class="playlist-cover">♫</div><div><div class="eyebrow">PLAYLIST</div><h2 id="detailTitle"></h2><p id="detailCount"></p></div></div>
+        <div class="detail-actions"><button id="playPlaylistBtn" class="primary-btn">▶ Play playlist</button><button id="addToPlaylistBtn" class="secondary-btn">＋ Add songs</button><button id="renamePlaylistBtn" class="secondary-btn">Rename</button><button id="deletePlaylistBtn" class="secondary-btn danger">Delete</button></div>
+        <div id="detailSongs" class="song-list"></div>
+      </div>
+    </section>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+  </main>
+
+  <aside id="player" class="player" aria-label="Music player">
+    <div class="now-playing">
+      <div id="coverArt" class="cover-art">♫</div>
+      <div class="track-info"><strong id="trackTitle">Nothing playing</strong><span id="trackArtist">Add songs to begin</span></div>
+      <button id="likeBtn" class="icon-btn like-btn" aria-label="Add to liked songs">♡</button>
+    </div>
+    <audio id="audio" preload="metadata"></audio>
+    <div class="progress-row"><span id="currentTime">0:00</span><input id="seekBar" type="range" min="0" max="1000" value="0" aria-label="Seek through song"><span id="duration">0:00</span></div>
+    <div class="controls">
+      <button id="shuffleBtn" class="control-btn subtle" aria-label="Shuffle" title="Shuffle">⤨</button>
+      <button id="prevBtn" class="control-btn" aria-label="Previous song" title="Previous">|◀</button>
+      <button id="playBtn" class="play-btn" aria-label="Play">▶</button>
+      <button id="nextBtn" class="control-btn" aria-label="Next song" title="Next">▶|</button>
+      <button id="repeatBtn" class="control-btn subtle" aria-label="Repeat mode" title="Repeat">↻</button>
+    </div>
+    <div class="player-bottom"><span id="queueLabel">Ready when you are</span><button id="speedBtn" class="speed-btn" title="Playback speed">1×</button></div>
+  </aside>
+  <script src="app.js"></script>
+</body>
+</html>
